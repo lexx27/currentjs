@@ -47,7 +47,7 @@ And you want to insert an active class named "current" at both the `a` and the `
 $('#mysupernav a').currentjs({
   parentElement: 'li',
   classname: 'current,
-  startonly: 'admin/posts'
+  startonly: true
 });
 ```
 
