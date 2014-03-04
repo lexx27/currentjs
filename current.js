@@ -11,7 +11,6 @@
     // Create the defaults once
     var currentjs = 'currentjs',
         defaults = {
-            selector: "a",
             parentElement: false,
             classname: 'active',
             startsonly: false
@@ -20,17 +19,9 @@
     // The actual plugin constructor
     function Plugin( element, options ) {
         this.element = element;
-
-        // jQuery has an extend method that merges the
-        // contents of two or more objects, storing the
-        // result in the first object. The first object
-        // is generally empty because we don't want to alter
-        // the default options for future instances of the plugin
         this.options = $.extend( {}, defaults, options) ;
-
         this._defaults = defaults;
         this._name = currentjs;
-
         this.init();
     }
 
@@ -56,7 +47,7 @@
         absoluteLink = self.trimSlash(absoluteLink);
         relativeLink = self.trimSlash(relativeLink);
         var isActive = false;
-        $(self.options.selector).each(function(){
+        $(self.element).each(function(){
 
             var menulink = $(this).attr('href');
             menulink = self.trimSlash(menulink);
@@ -90,5 +81,3 @@
     }
 
 })( jQuery, window, document );
-
-
