@@ -1,7 +1,7 @@
 currentjs
 =========
 
-Helps to automatically highlight current and active links in menu etc <li class="active"><a href="#" class="active">current link</a></li>
+Helps to automatically highlight current and active links in menu etc `<li class="active"><a href="#" class="active">current link</a></li>`
 
 
 Usage 
