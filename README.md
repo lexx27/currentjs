@@ -7,10 +7,10 @@ Helps to automatically highlight current and active links in menu etc <li class=
 Usage 
 ------
 
-Just create a new object
+Just call currentjs
 
 `
-new Currentjs();
+$('.selector a').currentjs();
 `
 
 
@@ -18,12 +18,14 @@ Parameters
 -----
 
 `
-new Currentjs(selector,parentElement,className);
+$('.selector a').currentjs(params);
 `
 
 **selector**: the jquery selector that targets the `<a>` elements you want to check. default `'a'`  
 **parentElement**: Do you want to add an active class to the parent elemnt? ex. `'li'`. default `false`  
-**className**: The class name inserted to the active links. default `'active'`  
+**classname**: The class name inserted to the active links. default `'active'`
+**startonly**: In some cases you want to activate a link that only contains a part only of the url path. For example if your are at `http://yoursite.com/admin/user` you would like a link with href `/admin/` to be considered as active. Because you are in the admin area. default `false`  
+
 
 Full example
 -----
@@ -43,12 +45,16 @@ And you want to insert an active class named "current" at both the `a` and the `
 
 
 ```
-new Currentjs('#mysupernav','li','current');
+$('.selector a').currentjs({
+  selector: '#mysupernav',
+  parentElement: 'li',
+  classname: 'current
+});
 ```
 
 Notes
 ------
 
-- The code works for both relative and absolute links
+- It works for both relative and absolute links
 - The current readme file took me more time than the actual code. So it should certainly needs some more work
 
