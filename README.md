@@ -21,7 +21,6 @@ Parameters
 $('.selector a').currentjs(params);
 `
 
-**selector**: the jquery selector that targets the `<a>` elements you want to check. default `'a'`  
 **parentElement**: Do you want to add an active class to the parent elemnt? ex. `'li'`. default `false`  
 **classname**: The class name inserted to the active links. default `'active'`  
 **startonly**: In some cases you want to activate a link that only contains a part only of the url path. For example if your are at `http://yoursite.com/admin/user` you would like a link with href `/admin/` to be considered as active. Because you are in the admin area. default `false`  
@@ -34,9 +33,9 @@ Lets say we have the following html code
 
 ```
 <ul id="mysupernav">
-  <li>a href="/">Home</a></li>
-  <li>a href="/about">About</a></li>
-  <li>a href="/contact">Contact</a></li>
+  <li><a href="/">Home</a></li>
+  <li><a href="/about">About</a></li>
+  <li><a href="/contact">Contact</a></li>
 </ul>
 ```
 
@@ -45,10 +44,10 @@ And you want to insert an active class named "current" at both the `a` and the `
 
 
 ```
-$('.selector a').currentjs({
-  selector: '#mysupernav',
+$('#mysupernav a').currentjs({
   parentElement: 'li',
-  classname: 'current
+  classname: 'current,
+  startonly: 'admin/posts'
 });
 ```
 
