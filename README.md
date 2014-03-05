@@ -24,7 +24,7 @@ $('.selector a').currentjs(params);
 **parentElement**: Do you want to add an active class to the parent elemnt? ex. `'li'`. default `false`  
 **classname**: The class name inserted to the active links. default `'active'`  
 **startonly**: In some cases you want to activate a link that only contains a part only of the url path. For example if your are at `http://yoursite.com/admin/user` you would like a link with href `/admin/` to be considered as active. Because you are in the admin area. default `false`  
-
+**async**: Add the active class when clicking on a menu link. Useful for applications that combine menu with ajax and ordinary links. default: false
 
 Full example
 -----
