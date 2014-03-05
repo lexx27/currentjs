@@ -13,7 +13,8 @@
         defaults = {
             parentElement: false,
             classname: 'active',
-            startsonly: false
+            startsonly: false,
+	    async: false
         };
 
     // The actual plugin constructor
@@ -27,6 +28,23 @@
 
     Plugin.prototype.init = function () {
         this.filter();
+	
+	var self = this;
+	if (self.options.async){
+ 	    $('body').on('click',self.element,function(e){
+	        $(self.element).removeClass(self.options.classname);
+	        if (self.options.parentElement !== false) {
+                    $(self.element).closest(self.options.parentElement).removeClass(self.options.classname);
+                }
+            
+	
+	        $(e.target).addClass(self.options.classname);
+                if (self.options.parentElement !== false) {
+                    $(e.target).closest(self.options.parentElement).addClass(self.options.classname);
+                }
+
+	    });
+        }
     };
 
     // A really lightweight plugin wrapper around the constructor,
@@ -51,8 +69,9 @@
 
             var menulink = $(this).attr('href');
             menulink = self.trimSlash(menulink);
-
-            if (self.options.startsonly === true) {
+	    if (menulink == ''){
+		isActive = false;
+            }else if (self.options.startsonly === true) {
                 if (absoluteLink.indexOf(menulink) != -1 || relativeLink.indexOf(menulink) != -1) {
                     isActive = true;
                 }
