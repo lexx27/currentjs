@@ -14,6 +14,7 @@
             parentElement: false,
             classname: 'active',
             startsonly: false,
+            segments: false,
         async: false
         };
 
@@ -36,16 +37,10 @@
                 if ($(e.target).hasClass(self.options.classname)){
                     isActive = true;
                 }
-                $(self.element).removeClass(self.options.classname);
-                if (self.options.parentElement !== false) {
-                        $(self.element).closest(self.options.parentElement).removeClass(self.options.classname);
-                    }
-                
+
+                self.deactivateAll();
                 if (!isActive){
-                    $(e.target).addClass(self.options.classname);
-                    if (self.options.parentElement !== false) {
-                        $(e.target).closest(self.options.parentElement).addClass(self.options.classname);
-                    }
+                    self.activateAll(e.target);
                 }
 
             });
@@ -74,21 +69,43 @@
 
             var menulink = $(this).attr('href');
             menulink = self.trimSlash(menulink);
-        if (menulink == ''){
-        isActive = false;
+            if (menulink == ''){
+                isActive = false;
             }else if (self.options.startsonly === true) {
                 if (absoluteLink.indexOf(menulink) != -1 || relativeLink.indexOf(menulink) != -1) {
                     isActive = true;
                 }
             }else if ( absoluteLink == menulink || relativeLink == menulink ) {
                 isActive = true;
+            }else if(self.options.segments > 0){
+
+                menulink = self.toRelative(menulink);
+                relativeLink;
+
+                menulinkAr = menulink.split('/');
+                relativeLinkAr = relativeLink.split('/');
+                
+                $.each(menulinkAr, function(key,value){
+                    if (relativeLinkAr[key].length == 0) {
+                        isActive = false;
+                        return false;
+                    }
+                    if (value != relativeLinkAr[key]) {
+                        isActive = false;
+                        return false;
+                    }
+                    if (key + 1 >= self.options.segments) {
+                        isActive = true;
+                        return false;
+                    }
+                })
             }
+
             if (isActive) {
-                if (self.options.parentElement !== false) {
-                    $(this).closest(self.options.parentElement).addClass(self.options.classname);
-                }
-                $(this).addClass(self.options.classname);
+                self.activate(this);
             }
+
+
             isActive = false;
         });
     };
@@ -103,5 +120,30 @@
         }
         return str;
     }
+
+
+    Plugin.prototype.deactivateAll = function() {
+        var self = this;
+        $(self.element).removeClass(self.options.classname);
+        if (self.options.parentElement !== false) {
+            $(self.element).closest(self.options.parentElement).removeClass(self.options.classname);    
+        }
+    }
+
+    Plugin.prototype.activate = function(target) {
+        var self = this;
+        $(target).addClass(self.options.classname);
+        if (self.options.parentElement !== false) {
+            $(target).closest(self.options.parentElement).addClass(self.options.classname);
+        }
+    }
+
+    Plugin.prototype.toRelative = function(url) {
+        return url.replace(/https?:\/\/[^\/]+/i, "");
+    }
+
+    
+
+    
 
 })( jQuery, window, document );
